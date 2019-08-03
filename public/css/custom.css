@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+.welcome-message-container{
+  font-size: 40px;
+  text-align: center;
+}
+
+.logo {
+  color: #ffffff;
+}
+
+.header-link-container {
+  line-height: 60px;
+  margin-right: 20px;
+}
+
+.header-link {
+  color: #ffffff;
+}
+
+#header-container {
+  background-color: #9966FF;
+  color: #ffffff;
+  text-align:center;
+}
+
+#footer-container {
+  background-color: #CCCCCC;
+  text-align: center;
+  line-height: 60px;
+}
+
+#logout-field {
+  display: inline-block;
+}
+
+.index-pdca-time {
+  text-align: center;
+}
+
+.index-pdca-text {
+  text-align: center;
+}
+
+.index-pdca-edit-btn {
+  text-align: center;
+}
+
+.message_field {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  /* margin: 0 250px 20px; */
+}
+
+.form-error-field {
+  color: #ff0000;
+}
