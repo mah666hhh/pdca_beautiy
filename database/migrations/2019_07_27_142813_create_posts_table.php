@@ -20,11 +20,15 @@ class CreatePostsTable extends Migration
             $table->string('do', 500);
             $table->string('check', 1000);
             $table->string('action', 500);
-            $table->integer('user_id');
+            $table->unsignedInteger('user_id');
             $table->time('wakeup_time')->nullable();
             $table->time('bed_time')->nullable();
             $table->boolean('liked')->default(false);
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
