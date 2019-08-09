@@ -24,7 +24,7 @@
             <span class="form-error-field">{{ $error }}</span>
           @endforeach
         @endif
-        <input type="password" name="password" value="{{ old('password')) }}" class="form-control" id="password_label" required="true">
+        <input type="password" name="password" value="{{ old('password') }}" class="form-control" id="password_label" required="true"><br/>
 
         <div class="form-group">
             <input type="submit" value="ログインする" class="btn btn-success">
