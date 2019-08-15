@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Http\Requests\SessionRequest;
 use \App\User;
+use \Carbon\Carbon;
 
 class SessionController extends Controller
 {
@@ -38,7 +39,31 @@ class SessionController extends Controller
         // $result = $user ? redirect('/post')->with('message', 'ログインしました!') : redirect('/')->with('message', 'ログイン出来ませんでした。');
             if ($user) {
                 $request->session()->put('ses_email', $email);
-                return redirect('/post')->with('message', 'ログインしました!');
+                $result = redirect('/post')->with('message', 'ログインしました!');
+
+                $daily_login_flg = $user->daily_login_flg;
+                $last_login_day = new Carbon($user->last_login_day);
+                $continus_login_count = $user->continus_login_count;
+
+                // 昨日ログインしてたらログイン日数加算
+                if ($daily_login_flg == 1 && $last_login_day->isYesterday()) {
+                    $user->last_login_day = Carbon::today();
+                    $user->continus_login_count = $continus_login_count + 1;
+                    $user->save();
+                } elseif ($daily_login_flg == 1 && $last_login_day->lte(Carbon::yesterday()->subDays(1))) { // ログインがおととい以前で途切れていた場合はログイン日数を1にする
+                    $user->last_login_day = Carbon::today();
+                    $user->continus_login_count = 1;
+                    $user->save();
+                } elseif ($daily_login_flg == 0 && $last_login_day == null) { // 最初のログイン時の処理
+                    $user->last_login_day = Carbon::today();
+                    $user->daily_login_flg = 1;
+                    $user->continus_login_count = 1;
+                    $user->save();
+                } elseif ($daily_login_flg == 1 && $last_login_day == Carbon::today()) { // 既に当日ログイン済みなら何もしない
+                }
+
+                return $result;
+
             } else {
                 $message = ['message' => 'メールアドレスもしくはパスワードが正しくありません。'];
                 return view('session/create', compact('message'));

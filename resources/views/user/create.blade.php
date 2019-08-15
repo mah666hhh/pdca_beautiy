@@ -1,3 +1,4 @@
+<!-- 使ってない -->
 @extends('layouts/layout')
 @section('content')
 <h1>新規登録</h1>
@@ -34,7 +35,7 @@
             <span class="form-error-field">{{ $error }}</span>
           @endforeach
         @endif
-        <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control" id="password_confirmation_label" required="true">
+        <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control" id="password_confirmation_label" required="true"><br/>
 
         <div class="form-group">
             <input type="submit" value="登録する" class="btn btn-success">

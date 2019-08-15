@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/howto', 'HowtoController@index');
 
     Route::resource('post', 'PostController');
+    Route::get('/search', 'SearchController');
 
     Route::get('/session/new', 'SessionController@create');
     Route::post('/session/login', 'SessionController@store');

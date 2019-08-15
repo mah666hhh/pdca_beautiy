@@ -3,21 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
+use Goutte\Client;
 
 class PostController extends Controller
 {
     // pdca一覧
     public function index(Request $request) {
-        // $current_user = User::where('email', $request->session()->get('obj'));
-        // $posts = $current_user->post()->all();
+        $client = new Client();
+        $request_page = $client->request('GET', 'http://www.meigensyu.com/quotations/view/random');
+        $proverb = $request_page->filter('div.text')->text();
+
         if ($request->session()->has('ses_email')) {
           $session_email = $request->session()->get('ses_email');
-          $posts = Post::where('user_id', User::where('email', $session_email)->first()->id)->orderBy('post_day', 'desc')->latest()->get();
-          $result = view('/post/index', compact('posts', 'session_email'))->with('message', 'ログインしました!');
+          $current_user = User::where('email', $session_email)->first();
+          $posts = Post::where('user_id', $current_user->id)->orderBy('post_day', 'desc')->latest()->get();
+          $current_user_id = User::FindCurrentUserId($session_email);
+          $current_user_goal = $current_user->goal;
+          $today = Carbon::today()->format('Y-m-d');
+          $result = view('/post/index', compact('posts', 'session_email', 'proverb', 'current_user_goal', 'current_user_id', 'today'))
+                    ->with('message', 'ログインしました!');
         } else {
           $result = redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
         }
@@ -26,16 +36,17 @@ class PostController extends Controller
     }
 
     // pdca投稿ページ
-    public function create(Request $request) {
-        $post = new Post();
-        if ($request->session()->get('ses_email')) {
-            $session_email = $request->session()->get('ses_email');
-        } else {
-            return redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
-        }
+    // public function create(Request $request) {
+    //     $post = new Post();
+    //     if ($request->session()->get('ses_email')) {
+    //         $session_email = $request->session()->get('ses_email');
+    //         $current_user_goal = User::where('email', $session_email)->first()->goal;
+    //     } else {
+    //         return redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+    //     }
 
-        return view('post/create', compact('post', 'session_email'));
-    }
+    //     return view('post/create', compact('post', 'session_email', 'current_user_goal'));
+    // }
 
     // pdca投稿
     public function store(PostRequest $request) {
@@ -53,13 +64,15 @@ class PostController extends Controller
     public function edit(Request $request, $post_id) {
         if ($request->session()->get('ses_email')) {
             $session_email = $request->session()->get('ses_email');
+            $current_user_goal = User::where('email', $session_email)->first()->goal;
+            $current_user_id = User::FindCurrentUserId($session_email);
         } else {
             return redirect('session/new')->with('message', 'セッションの有効期限が切れました。 再度ログインして下さい。');
         }
 
         $post = Post::findorFail($post_id);
 
-        return view('post/edit', compact('post', 'session_email'));
+        return view('post/edit', compact('post', 'session_email', 'current_user_goal'));
     }
 
     // pdca更新

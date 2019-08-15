@@ -19,7 +19,7 @@ class PostsTableSeeder extends Seeder
              'action' => 'うなぎ食べる',
              'user_id' => 1,
              'wakeup_time' => '09:15',
-             'bed_time' => '21:15'
+             'bed_time' => '21:15',
             ],
             ['post_day' => \Carbon\Carbon::now(),
              'plan' => 'rubyの勉強',

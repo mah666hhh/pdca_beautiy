@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'goal'
     ];
 
     /**
@@ -39,5 +39,9 @@ class User extends Authenticatable
 
     public function posts() {
         return $this->hasMany('App\Post');
+    }
+
+    public function scopeFindCurrentUserId($query, $session_email) {
+        return $query->where('email', $session_email)->first()->id;
     }
 }

@@ -13,12 +13,13 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
-              'name' => 'mah',
-              'email' => 'mah6@test.com',
-              'password' => 'password',
+              'name' => 'masaru',
+              'email' => 'mah6h@icloud.com',
+              'password' => 'foobar',
               'prefacture' => 'osaka',
               'gender' => '男',
-              'hobby' => 'ダンス'
+              'hobby' =>  'dance',
+              'goal' => '月収50万のフリーエンジニアになる。'
             ],
             [
               'name' => 'testman1',
@@ -26,7 +27,8 @@ class UsersTableSeeder extends Seeder
               'password' => 'password',
               'prefacture' => 'tokyo',
               'gender' => '男',
-              'hobby' =>  'movie'
+              'hobby' =>  'movie',
+              'goal' => '2年以内に月収20万の不労所得を得る。'
             ]
         ];
 

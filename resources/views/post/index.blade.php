@@ -1,5 +1,6 @@
 @extends('layouts/layout')
 @section('content')
+<h2>PDCA一覧</h2>
     <table class="table table-bordered" style="table-layout:fixed;width:100%;">
         <thead>
             <tr>
@@ -29,5 +30,6 @@
             </tr>
             @endforeach
         </tbody>
-    </table>
+    </table><br/>
+    @include('post/create')
 @endsection

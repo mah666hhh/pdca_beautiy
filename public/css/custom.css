@@ -1,8 +1,23 @@
 @charset "utf-8";
 
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #EEEEEE;
+}
+
+#content {
+  flex: 1;
+}
+
 .welcome-message-container{
   font-size: 40px;
   text-align: center;
+  padding-top: 100px;
 }
 
 .logo {
@@ -60,4 +75,42 @@
 
 .form-error-field {
   color: #ff0000;
+}
+
+#pdca-search-form {
+  float: left;
+}
+
+.post-textarea {
+  background-image: url(../image/スライムアイコン-545x233.png);
+  background-size: cover;
+  border-style: groove;
+  border-width: 4px;
+  border-radius: 40px;
+  font-weight: bold;
+  font-style:italic;
+}
+
+.post-day-time-area {
+  border-style: groove;
+  border-width: 4px;
+  border-radius: 40px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.search-th {
+  font-size: 30px;
+}
+
+.signin-signup-modal {
+  text-align: center;
+}
+
+.proverb-area {
+  text-align: center;
+}
+
+.welcome-app-name {
+  font-size: 60px;
 }

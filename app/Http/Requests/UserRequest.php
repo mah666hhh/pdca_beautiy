@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class UserRequest extends FormRequest
 {
@@ -11,9 +12,10 @@ class UserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(Request $request)
     {
-        if($this->path() == 'user'){
+        $current_user_id = substr($request->pathInfo, 6);
+        if($this->path() == 'user' || $this->path() == "user/{$current_user_id}"){
             return true;
         }
         return false;
@@ -24,12 +26,22 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            'name' => 'required|string|unique:users,name',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed'
-        ];
+        $current_user_id = substr($request->pathInfo, 6);
+        if($this->path() == 'user'){
+            $result = [
+                'name' => 'required|string|unique:users,name',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6|confirmed'
+            ];
+        } elseif($this->path() == "user/{$current_user_id}") {
+            $result = [
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'password' => 'required|string|min:6|confirmed'
+            ];
+        }
+        return $result;
     }
 }

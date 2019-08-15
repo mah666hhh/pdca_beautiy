@@ -1,7 +1,8 @@
 @extends('layouts/layout')
 @section('content')
 <h1>PDCA編集</h1>
-(*は必須入力)
+  <p style="font-size:32px; font-style:italic; border-bottom: solid 1px black; display: inline-block;">目標: {{ $current_user_goal }}</p>
+  <p style="color:#ff0000;">(*は必須入力)</p>
     <form action="/post/{{ $post->id }}" method="POST">
         <input type="hidden" name="_method" value="PUT">
         {{ csrf_field() }}
@@ -19,7 +20,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-            <input type="date" name="post_day" value="{{ old('post_day', $post->post_day) }}" required="true" class="form-control" id="post_day_label">
+            <input type="date" name="post_day" value="{{ old('post_day', $post->post_day) }}" required="true" class="form-control post-day-time-area" id="post_day_label">
         </div>
         <div class="form-group">
             <label for="plan_label">Plan*</label>
@@ -28,7 +29,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-            <textarea class="form-control" name="plan" id="plan_label" required="true">{{ old('plan', $post->plan) }}</textarea>
+            <textarea rows="23" class="form-control post-textarea" name="plan" id="plan_label" required="true">{{ old('plan', $post->plan) }}</textarea>
             <!-- {!! Form::label('plan', 'P:') !!}
             {!! Form::textarea('plan', null, ['class' => 'form-control']) !!} -->
         </div>
@@ -39,7 +40,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-            <textarea class="form-control" name="do" id="do_label" required="true">{{ old('do', $post->do) }}</textarea>
+            <textarea rows="23" class="form-control post-textarea" name="do" id="do_label" required="true">{{ old('do', $post->do) }}</textarea>
             <!-- {!! Form::label('do', 'D:') !!}
             {!! Form::textarea('do', null, ['class' => 'form-control']) !!} -->
         </div>
@@ -50,7 +51,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-            <textarea class="form-control" name="check" id="check_label" required="true">{{ old('check', $post->check) }}</textarea>
+            <textarea rows="23" class="form-control post-textarea" name="check" id="check_label" required="true">{{ old('check', $post->check) }}</textarea>
             <!-- {!! Form::label('check', 'C:') !!}
             {!! Form::textarea('check', null, ['class' => 'form-control']) !!} -->
         </div>
@@ -61,7 +62,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-            <textarea class="form-control" name="action" id="action_label" required="true">{{ old('action', $post->action) }}</textarea>
+            <textarea rows="23" class="form-control post-textarea" name="action" id="action_label" required="true">{{ old('action', $post->action) }}</textarea>
             <!-- {!! Form::label('action', 'A:') !!}
             {!! Form::textarea('action', null, ['class' => 'form-control']) !!} -->
         </div>
@@ -72,7 +73,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-          <input type="time" class="form-control" name="wakeup_time" value="{{ old('wakeup_time', $post->wakeup_time) }}" id="wakeup_time_label" required="true">
+          <input type="time" class="form-control post-day-time-area" name="wakeup_time" value="{{ old('wakeup_time', $post->wakeup_time) }}" id="wakeup_time_label" required="true">
         </div>
         <div class="form-group">
           <label for="bed_time_label">就寝時間</label>
@@ -81,7 +82,7 @@
                 <span class="form-error-field">{{ $error }}</span>
               @endforeach
             @endif
-          <input type="time" class="form-control" name="bed_time" value="{{ old('bed_time', $post->bed_time) }}" id="bed_time_label" required="true">
+          <input type="time" class="form-control post-day-time-area" name="bed_time" value="{{ old('bed_time', $post->bed_time) }}" id="bed_time_label" required="true">
         </div>
 
         <div class="form-group">

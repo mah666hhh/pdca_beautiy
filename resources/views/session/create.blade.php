@@ -1,3 +1,4 @@
+<!-- 使ってない -->
 @extends('layouts/layout')
 @section('content')
 <h1>ログイン画面</h1>
