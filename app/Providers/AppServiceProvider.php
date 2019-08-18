@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         // 本番環境(Heroku)でhttpsを強制する
         if (\App::isLocal()) {
         }
-        elseif (\App::runnningUnitTests()) {
+        elseif (app()->runningUnitTests()) {
         }
         else {
             \URL::forceScheme('https');
