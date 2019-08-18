@@ -34,13 +34,13 @@ class AppServiceProvider extends ServiceProvider
 
         dump(env('APP_ENV_PRODUCTION') == 'true');
 
-        if (\App::isLocal()) {
-        }
-        elseif (app()->runningUnitTests()) {
-        }
-        elseif (env('APP_ENV_PRODUCTION') == 'true')
+        if (env('APP_ENV_PRODUCTION') == 'true')
         {
             \URL::forceScheme('https');
+        }
+        elseif (\App::isLocal()) {
+        }
+        elseif (app()->runningUnitTests()) {
         }
     }
 }
