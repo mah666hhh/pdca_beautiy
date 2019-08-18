@@ -13,4 +13,6 @@ class Post extends Model
     public function scopeOrderByDescPostdayAndLatest($query) {
         return $query->orderBy('post_day', 'desc')->latest();
     }
+
+    protected $guarded = ['_token'];
 }
