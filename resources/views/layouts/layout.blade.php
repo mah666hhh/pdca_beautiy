@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   @if(\App::isLocal())
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
-  @elseif(env('APP_ENV_PRODUCTION'))
+  @elseif(env('APP_ENV_PRODUCTION') == 'true')
     <link rel="stylesheet" href="{{ secure_asset('css/custom.css') }}" type="text/css">
   @endif
   <title>bravestar</title>
 </head>
 
 <body>
-  @if(env('APP_ENV_PRODUCTION'))
+  @if(env('APP_ENV_PRODUCTION') == 'true')
     <h1>production</h1>
   @endif
   <header class="navbar fixed-top" id="header-container">
