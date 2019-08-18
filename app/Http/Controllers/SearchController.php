@@ -13,7 +13,7 @@ class SearchController extends Controller
     public function __invoke(Request $request) {
         $users_name = User::all()->pluck('name');
 
-    if ($request->session()->has('ses_email')) {
+        if ($request->session()->has('ses_email')) {
           $session_email = $request->session()->get('ses_email');
         } else {
           return redirect('/')->with('message', 'ログインしてください。');
@@ -44,12 +44,20 @@ class SearchController extends Controller
                      ->where('user_id', User::where('name', $post_user_name)->first()->id)
                      ->OrderByDescPostdayAndLatest()
                      ->get();
-        } elseif(!$plan && !$do && !$check && !$action && $post_user_name == $current_user->name && $post_start_day && $post_end_day) { // 投稿者名とログイン中ユーザーの名前が同じ時は自分のPostを取得
+        }
+        elseif(!$plan && !$do && !$check && !$action && $post_user_name == $current_user->name && $post_start_day && $post_end_day) { // 投稿者名とログイン中ユーザーの名前が同じ時は自分のPostを取得
             $posts = Post::whereBetween('post_day', [$post_start_day, $post_end_day])
                     ->where('user_id', User::FindCurrentUserId($session_email))
                     ->OrderByDescPostdayAndLatest()
                     ->get();
-        } // 投稿者名が存在しない場合はそのユーザーは存在しないというエラーメッセージを返却
+        }
+        // 投稿者を指定しない場合は全ユーザーから取得
+        elseif (!$plan && !$do && !$check && !$action && $post_user_name == null && $post_start_day && $post_end_day) {
+            $posts = Post::whereBetween('post_day', [$post_start_day, $post_end_day])
+                    ->OrderByDescPostdayAndLatest()
+                    ->get();
+        }
+        // 投稿者名が存在しない場合はそのユーザーは存在しないというエラーメッセージを返却
 
         // リクエストに日付があれば、日付順でpを取得
         if($plan && $post_start_day && $post_end_day) {
