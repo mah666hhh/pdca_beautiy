@@ -7,11 +7,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   @if(\App::isLocal())
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
+  @elseif(env('APP_ENV_PRODUCTION'))
+    <link rel="stylesheet" href="{{ secure_asset('css/custom.css') }}" type="text/css">
   @endif
   <title>bravestar</title>
 </head>
 
 <body>
+  @if(env('APP_ENV_PRODUCTION'))
+    <h1>production</h1>
+  @endif
   <header class="navbar fixed-top" id="header-container">
     <a href="/" class="navbar-brand">
       <p class="logo"><img src="{{ asset('image/スライムアイコン-545x460.png') }}" width="30" height="30" alt="スライム">
