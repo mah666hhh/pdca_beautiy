@@ -27,12 +27,15 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         // 本番環境(Heroku)でhttpsを強制する
-        if (\App::isLocal()) {
-        }
-        elseif (app()->runningUnitTests()) {
-        }
-        else {
+        if(env('APP_ENV_PRODUCTION')) {
             \URL::forceScheme('https');
         }
+        // if (\App::isLocal()) {
+        // }
+        // elseif (app()->runningUnitTests()) {
+        // }
+        // else {
+        //     \URL::forceScheme('https');
+        // }
     }
 }
