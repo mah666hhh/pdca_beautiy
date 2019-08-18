@@ -22,7 +22,7 @@ class PostController extends Controller
           $current_user_id = User::FindCurrentUserId($session_email);
           $current_user_goal = $current_user->goal;
           $today = Carbon::today()->format('Y-m-d');
-          $result = view('/post/index', compact('posts', 'session_email', 'proverb', 'current_user_goal', 'current_user_id', 'today'))->with('message', 'ログインしました!');
+          $result = view('/post/index', compact('posts', 'session_email', 'current_user_goal', 'current_user_id', 'today'))->with('message', 'ログインしました!');
         } else {
           $result = redirect('/')->with('message', 'ログインしてください。');
         }
