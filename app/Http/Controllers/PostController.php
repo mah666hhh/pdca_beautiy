@@ -30,19 +30,6 @@ class PostController extends Controller
         return $result;
     }
 
-    // pdca投稿ページ
-    // public function create(Request $request) {
-    //     $post = new Post();
-    //     if ($request->session()->get('ses_email')) {
-    //         $session_email = $request->session()->get('ses_email');
-    //         $current_user_goal = User::where('email', $session_email)->first()->goal;
-    //     } else {
-    //         return redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
-    //     }
-
-    //     return view('post/create', compact('post', 'session_email', 'current_user_goal'));
-    // }
-
     // pdca投稿
     public function store(PostRequest $request) {
         $post = new Post();
