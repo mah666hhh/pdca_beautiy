@@ -20,7 +20,7 @@ class CheckSession
         if ($request->session()->has('obj'))
             $session_email = $request->session()->get('obj');
         else
-            return redirect('session/new');
+            return redirect('/');
 
         return $next($request);
     }

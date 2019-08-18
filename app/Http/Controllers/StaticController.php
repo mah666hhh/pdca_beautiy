@@ -10,13 +10,19 @@ class StaticController extends Controller
 {
     public function __invoke(Request $request) {
         $session_email = $request->session()->get('ses_email');
+        if($session_email == !null) {
+            $current_user_id = User::FindCurrentUserId($session_email);
+        }
 
         $client = new Client();
-        $request_page = $client->request('GET', 'http://www.meigensyu.com/quotations/view/random');
-        $proverb = $request_page->filter('div.text')->text();
 
-        if($session_email == !null)
-            $current_user_id = User::FindCurrentUserId($session_email);
+        try {
+            $request_page = $client->request('GET', 'http://www.meigensyu.com/quotations/view/random');
+            $proverb = $request_page->filter('div.text')->text();
+        } catch (Exception $e) {
+            error_log(__METHOD__.' Exception was encountered: '.get_class($e).' '.$e->getMessage());
+            return view('errors/500');
+        }
 
         return view('welcome', compact('session_email', 'proverb', 'current_user_id'));
     }

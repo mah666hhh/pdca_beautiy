@@ -8,8 +8,6 @@
   @unless (isset ($session_email))
     @include('session/modal')
     @include('user/modal')
-      <!-- <a href="/session/new" class="btn btn-primary">ログイン</a><br/> -->
-      <!-- <a href="/user/create" class="btn btn-default">新規登録</a> -->
   @endunless
 </div><br/>
 <div class="proverb-area">

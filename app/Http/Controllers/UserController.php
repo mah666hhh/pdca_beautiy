@@ -39,7 +39,7 @@ class UserController extends Controller
         $current_user = User::findOrFail($current_user_id);
         $result = view('user/edit', compact('current_user', 'current_user_id', 'session_email'));
       } else {
-        $result = redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+        $result = redirect('/')->with('message', 'ログインしてください。');
       }
       return $result;
     }

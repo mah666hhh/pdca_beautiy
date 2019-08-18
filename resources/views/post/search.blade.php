@@ -17,6 +17,34 @@
             <input type="date" class="form-control post-day-time-area" name="post_end_day" id="post_day_label">
           @endif
 
+          <br/>
+
+          @if($post_user_name)
+            <label for="post_user_name_label">投稿者名</label>
+            <select class="form-control post-user-name-area" name="post_user_name">
+              @if($users_name)
+                @foreach($users_name as $user_name)
+                  <!-- 投稿者名と投稿者一覧が一致するものをselectedにする -->
+                  @if($post_user_name == $user_name)
+                    <option value={{ $post_user_name }} selected>{{ $post_user_name }}</option>
+                  @else
+                    <option value={{ $user_name }}>{{ $user_name }}</option>
+                  @endif
+                @endforeach
+              @endif
+            </select>
+          @else
+            <label for="post_user_name_label">投稿者名</label>
+            <select class="form-control post-user-name-area" name="post_user_name">
+              <option value="選択して下さい">選択して下さい</option>
+              @if($users_name)
+                @foreach($users_name as $user_name)
+                  <option value={{ $user_name }}>{{ $user_name }}</option>
+                @endforeach
+              @endif
+            </select>
+          @endif
+
           @if($plan)
             <label for="plan_label">Plan</label>
             <input type="checkbox" name="plan" value="{{ $plan }}" id="plan_label">
@@ -48,7 +76,7 @@
             <label for="action_label">Action</label>
             <input type="checkbox" name="action" id="action_label"><br/>
           @endif
-            <input type="submit" value="検索" class="btn btn-primary">
+          <input type="submit" value="検索" class="btn btn-primary">
         </div>
       </form>
       <form action="/search" method="GET">
@@ -63,6 +91,7 @@
         <thead>
             <tr>
                 <th>PDCA実施日</th>
+                <th>投稿者名</th>
                 <th>Plan</th>
                 <th>Do</th>
                 <th>Check</th>
@@ -77,6 +106,8 @@
             @foreach($posts as $post)
             <tr>
               <td>{!! nl2br(e($post->post_day)) !!}</td>
+              <td>{!! nl2br(e($post->user->name)) !!}</td>
+
               <td>{!! nl2br(e($post->plan)) !!}</td>
               <td>{!! nl2br(e($post->do)) !!}</td>
               <td>{!! nl2br(e($post->check)) !!}</td>
@@ -84,7 +115,13 @@
               <td class="index-pdca-time">{{ substr($post->wakeup_time, 0, 5) }}</td>
               <td class="index-pdca-time">{{ substr($post->bed_time, 0, 5) }}</td>
               <td class="index-pdca-text">{{ $post->created_at }}</td>
-              <td class="index-pdca-edit-btn"><a href="/post/{{ $post->id }}/edit" class="btn btn-success">PDCA編集</a></td>
+
+              <!-- 自分のPDCAの場合のみ編集ボタンを表示する -->
+              <td class="index-pdca-edit-btn">
+                @if($current_user_id == $post->user_id)
+                  <a href="/post/{{ $post->id }}/edit" class="btn btn-success">PDCA編集</a>
+                @endif
+              </td>
             </tr>
             @endforeach
         @else
@@ -97,6 +134,8 @@
             )
               <tr>
                 <th class="search-th">PDCA実施日</th>
+                <th class="search-th">投稿者名</th>
+
                 @unless(empty ($planItems))
                   <th class="search-th">Plan</th>
                 @endif
@@ -125,6 +164,8 @@
                   @foreach($targets as $target)
                     <tr>
                       <td>{!! nl2br(e($target->post_day)) !!}</td>
+                      <td>{!! nl2br(e($target->user->name)) !!}</td>
+
                       @unless(empty ($planItems))
                         <td>{!! nl2br(e($target->plan)) !!}</td>
                       @endif

@@ -30,7 +30,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('post', 'PostController');
     Route::get('/search', 'SearchController');
 
-    Route::get('/session/new', 'SessionController@create');
     Route::post('/session/login', 'SessionController@store');
     Route::delete('/session/logout', 'SessionController@destroy');
 

@@ -17,7 +17,7 @@
           <form action="/user" method="POST">
             {{ csrf_field() }}
               <div class="form-group">
-                <label for="name_label">お名前</label>
+                <label for="name_label" class="modal-form-label">お名前</label>
                 @if($errors->has('name'))
                   @foreach($errors->get('name') as $error)
                     <span class="form-error-field">{{ $error }}</span>
@@ -27,7 +27,7 @@
               </div>
               
               <div class="form-group">
-                <label for="email_label">メールアドレス</label>
+                <label for="email_label" class="modal-form-label">メールアドレス</label>
                 @if($errors->has('email'))
                   @foreach($errors->get('email') as $error)
                     <span class="form-error-field">{{ $error }}</span>
@@ -37,7 +37,7 @@
               </div>
 
               <div class="form-group">
-                <label for="goal_label">目標</label>
+                <label for="goal_label" class="modal-form-label">目標</label>
                 @if($errors->has('goal'))
                   @foreach($errors->get('goal') as $error)
                     <span class="form-error-field">{{ $error }}</span>
@@ -47,7 +47,7 @@
               </div>
       
               <div class="form-group">
-                <label for="password_label">パスワード(半角英数字6文字以上)</label>
+                <label for="password_label" class="modal-form-label">パスワード(半角英数字6文字以上)</label>
                 @if($errors->has('password'))
                   @foreach($errors->get('password') as $error)
                     <span class="form-error-field">{{ $error }}</span>
@@ -57,7 +57,7 @@
               </div>
       
               <div class="form-group">
-                <label for="password_confirmation_label">パスワード再確認</label>
+                <label for="password_confirmation_label" class="modal-form-label">パスワード再確認</label>
                 @if($errors->has('password_confirmation'))
                   @foreach($errors->get('password_confirmation') as $error)
                     <span class="form-error-field">{{ $error }}</span>

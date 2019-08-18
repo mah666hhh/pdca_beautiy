@@ -11,28 +11,45 @@ use \App\User;
 class SearchController extends Controller
 {
     public function __invoke(Request $request) {
+        $users_name = User::all()->pluck('name');
 
     if ($request->session()->has('ses_email')) {
           $session_email = $request->session()->get('ses_email');
         } else {
-          return redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+          return redirect('/')->with('message', 'ログインしてください。');
         }
 
         $posts = null;
+        $post_user_name = null;
         $post_start_day = $request->post_start_day;
         $post_end_day = $request->post_end_day;
+
+        // 飛んできた投稿者名でユーザーが存在すれば代入
+        if($request->post_user_name) {
+            if($post_user = User::where('name', $request->post_user_name)->first()) {
+                $post_user_name = $post_user->name;
+            }
+        }
+
         $plan = $request->plan;
         $do = $request->do;
         $check = $request->check;
         $action = $request->action;
-        $current_user_id = User::where('email', $session_email)->first()->id;
+        $current_user = User::where('email', $session_email)->first();
+        $current_user_id = $current_user->id;
 
-        $searchCondition = 0;
-
-        if(!$plan && !$do && !$check && !$action && $post_start_day && $post_end_day) {
-            $posts = Post::whereBetween('post_day', [$post_start_day, $post_end_day]);
-            $posts = $posts->where('user_id', User::FindCurrentUserId($session_email))->OrderByDescPostdayAndLatest()->get();
-        }
+        // 投稿者指定あり
+        if(!$plan && !$do && !$check && !$action && $post_user_name && $post_start_day && $post_end_day) {
+            $posts = Post::whereBetween('post_day', [$post_start_day, $post_end_day])
+                     ->where('user_id', User::where('name', $post_user_name)->first()->id)
+                     ->OrderByDescPostdayAndLatest()
+                     ->get();
+        } elseif(!$plan && !$do && !$check && !$action && $post_user_name == $current_user->name && $post_start_day && $post_end_day) { // 投稿者名とログイン中ユーザーの名前が同じ時は自分のPostを取得
+            $posts = Post::whereBetween('post_day', [$post_start_day, $post_end_day])
+                    ->where('user_id', User::FindCurrentUserId($session_email))
+                    ->OrderByDescPostdayAndLatest()
+                    ->get();
+        } // 投稿者名が存在しない場合はそのユーザーは存在しないというエラーメッセージを返却
 
         // リクエストに日付があれば、日付順でpを取得
         if($plan && $post_start_day && $post_end_day) {
@@ -77,20 +94,22 @@ class SearchController extends Controller
         }
 
         return view('post/search', compact(
-            'posts',
-            'session_email',
-            'post_start_day',
-            'post_end_day',
-            'plan',
-            'do',
-            'check',
-            'action',
-            'planItems',
-            'doItems',
-            'checkItems',
-            'actionItems',
-            'current_user_id'
-            )
+              'posts',
+              'session_email',
+              'post_start_day',
+              'post_end_day',
+              'plan',
+              'do',
+              'check',
+              'action',
+              'planItems',
+              'doItems',
+              'checkItems',
+              'actionItems',
+              'current_user_id',
+              'post_user_name',
+              'users_name'
+        )
         );
     }
 }

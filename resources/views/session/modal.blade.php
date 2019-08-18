@@ -22,7 +22,7 @@
         <form action="/session/login" method="POST">
           {{ csrf_field() }}
           <div class="form-group">
-            <label for="signin_email_label">メールアドレス</label>
+            <label for="signin_email_label" class="modal-form-label">メールアドレス</label>
             @if($errors->has('email'))
               @foreach($errors->get('email') as $error)
                 <span class="form-error-field">{{ $error }}</span>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="form-group">
-            <label for="signin_password_label">パスワード</label>
+            <label for="signin_password_label" class="modal-form-label">パスワード</label>
               @if($errors->has('password'))
                 @foreach($errors->get('password') as $error)
                   <span class="form-error-field">{{ $error }}</span>

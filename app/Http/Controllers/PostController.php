@@ -15,10 +15,6 @@ class PostController extends Controller
 {
     // pdca一覧
     public function index(Request $request) {
-        $client = new Client();
-        $request_page = $client->request('GET', 'http://www.meigensyu.com/quotations/view/random');
-        $proverb = $request_page->filter('div.text')->text();
-
         if ($request->session()->has('ses_email')) {
           $session_email = $request->session()->get('ses_email');
           $current_user = User::where('email', $session_email)->first();
@@ -26,10 +22,9 @@ class PostController extends Controller
           $current_user_id = User::FindCurrentUserId($session_email);
           $current_user_goal = $current_user->goal;
           $today = Carbon::today()->format('Y-m-d');
-          $result = view('/post/index', compact('posts', 'session_email', 'proverb', 'current_user_goal', 'current_user_id', 'today'))
-                    ->with('message', 'ログインしました!');
+          $result = view('/post/index', compact('posts', 'session_email', 'proverb', 'current_user_goal', 'current_user_id', 'today'))->with('message', 'ログインしました!');
         } else {
-          $result = redirect('session/new')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+          $result = redirect('/')->with('message', 'ログインしてください。');
         }
 
         return $result;
@@ -67,12 +62,12 @@ class PostController extends Controller
             $current_user_goal = User::where('email', $session_email)->first()->goal;
             $current_user_id = User::FindCurrentUserId($session_email);
         } else {
-            return redirect('session/new')->with('message', 'セッションの有効期限が切れました。 再度ログインして下さい。');
+            return redirect('/')->with('message', 'ログインして下さい。');
         }
 
         $post = Post::findorFail($post_id);
 
-        return view('post/edit', compact('post', 'session_email', 'current_user_goal'));
+        return view('post/edit', compact('post', 'session_email', 'current_user_goal', 'current_user_id'));
     }
 
     // pdca更新

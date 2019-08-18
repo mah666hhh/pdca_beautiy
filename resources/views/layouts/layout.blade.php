@@ -17,7 +17,7 @@
       </p>
     </a>
     <span>
-      <div align="right" class="header-link-container">
+      <div class="header-link-container"> <!-- align="right" -->
         <span>$session_emailにある値:
         @if(isset ($session_email))
           {{ $session_email }}
@@ -26,16 +26,26 @@
         @endif
         </span>
         @if(isset ($session_email))
-          <a href="/post" class="header-link">PDCA一覧</a>
-          <a href="/search" class="header-link">PDCA検索</a>
-          <a href="user/{{ $current_user_id }}/edit" class="header-link">プロフィール編集</a>
-          <!-- <a href="/session/logout" data-method="POST" class="header-link">ログアウト</a> -->
-          <form method="post" action="/session/logout" id="logout-field">
-              {{ csrf_field() }}
-              {{ method_field(('delete')) }}
-              <!-- <input name="_method" type="hidden" value="DELETE"> -->
-              <input type="submit" value="ログアウト" class="btn btn-primary">
-          </form>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Menu
+             <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu header-link-list">
+              <a class="dropdown-item header-link" href="/post">マイページ</a><br/>
+              <a class="dropdown-item header-link" href="/search">PDCA検索</a><br/>
+              <a class="dropdown-item header-link" href="user/{{ $current_user_id }}/edit">プロフィール編集</a><br/>
+              <div class="dropdown-divider"></div>
+              <!-- <a href="/session/logout" data-method="POST" class="header-link">ログアウト</a> -->
+              <form method="post" action="/session/logout" id="logout-field">
+                  {{ csrf_field() }}
+                  {{ method_field(('delete')) }}
+                  <!-- <input name="_method" type="hidden" value="DELETE"> -->
+                  <input type="submit" value="ログアウト" class="btn btn-default">
+              </form>
+              <!-- <a class="dropdown-item header-link" href="#">その他リンク</a> -->
+            </div><!-- /.dropdown-menu -->
+          </div><!-- /.btn-group -->
         @endif
     </span>
   </header>

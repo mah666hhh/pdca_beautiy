@@ -1,18 +1,17 @@
 @extends('layouts/layout')
 @section('content')
-<h2>PDCA一覧</h2>
     <table class="table table-bordered" style="table-layout:fixed;width:100%;">
         <thead>
             <tr>
-                <th>PDCA実施日</th>
+                <th style="width:99px;">PDCA実施日</th>
                 <th>Plan</th>
                 <th>Do</th>
                 <th>Check</th>
                 <th>Action</th>
                 <th style="width:73px;">起床時間</th>
                 <th style="width:73px;">就寝時間</th>
-                <th style="width:88px text-ailgn:center;">投稿日時</th>
-                <th></th>
+                <th>投稿日時</th>
+                <th style="width:108px;"></th>
             </tr>
         </thead>
         <tbody>

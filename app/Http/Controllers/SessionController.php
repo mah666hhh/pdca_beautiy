@@ -6,20 +6,21 @@ use Illuminate\Http\Request;
 use \App\Http\Requests\SessionRequest;
 use \App\User;
 use \Carbon\Carbon;
+use Goutte\Client;
 
 class SessionController extends Controller
 {
     // ログイン画面
-    public function create(Request $request) {
-        $result = $request->session()->get('ses_email') ? redirect('/post')->with('message', '既にログインしています。') : view('session/create');
-        return $result;
+    // public function create(Request $request) {
+    //     $result = $request->session()->get('ses_email') ? redirect('/post')->with('message', '既にログインしています。') : view('session/create');
+    //     return $result;
 
-        // if ($request->session()->get('obj'))
-        //     $request->session()->flash('message', '既にログインしています。');
-        //     return redirect('/');
+    //     // if ($request->session()->get('obj'))
+    //     //     $request->session()->flash('message', '既にログインしています。');
+    //     //     return redirect('/');
 
-        // return view('session/create');
-    }
+    //     // return view('session/create');
+    // }
 
     // ログイン
     public function store(SessionRequest $request) {
@@ -65,8 +66,18 @@ class SessionController extends Controller
                 return $result;
 
             } else {
+                $client = new Client();
+
+                try {
+                    $request_page = $client->request('GET', 'http://www.meigensyu.com/quotations/view/random');
+                    $proverb = $request_page->filter('div.text')->text();
+                } catch (Exception $e) {
+                    error_log(__METHOD__.' Exception was encountered: '.get_class($e).' '.$e->getMessage());
+                    return view('errors/500');
+                }
+
                 $message = ['message' => 'メールアドレスもしくはパスワードが正しくありません。'];
-                return view('session/create', compact('message'));
+                return view('welcome', compact('message', 'proverb'));
             }
         }
     }
