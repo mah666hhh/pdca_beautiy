@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  @if(env('APP_ENV_PRODUCTION'))
-    <link rel="stylesheet" href="{{ secure_asset('/css/custom.css') }}" type="text/css">
-  @elseif(\App::isLocal())
-    <link rel="stylesheet" href="{{ asset('/css/custom.css') }}" type="text/css">
+  @if(\App::isLocal())
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
+  @elseif(env('APP_ENV_PRODUCTION'))
+    <link rel="stylesheet" href="{{ secure_asset('css/custom.css') }}" type="text/css">
   @endif
   <title>bravestar</title>
 </head>
