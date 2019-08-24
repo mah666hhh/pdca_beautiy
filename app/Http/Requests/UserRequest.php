@@ -31,15 +31,17 @@ class UserRequest extends FormRequest
         $current_user_id = substr($request->pathInfo, 6);
         if($this->path() == 'user'){
             $result = [
-                'name' => 'required|string|unique:users,name',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:6|confirmed'
+                'name' => 'required|string|max:50|unique:users,name',
+                'email' => 'required|email|max:128|unique:users,email',
+                'password' => 'required|string|min:6|confirmed',
+                'goal' => 'required|string|max:50|'
             ];
         } elseif($this->path() == "user/{$current_user_id}") {
             $result = [
-                'name' => 'required|string',
-                'email' => 'required|email',
-                'password' => 'required|string|min:6|confirmed'
+                'name' => 'required|string|max:50',
+                'email' => 'required|email|max:128',
+                'password' => 'required|string|min:6|confirmed',
+                'goal' => 'required|string|max:50|'
             ];
         }
         return $result;

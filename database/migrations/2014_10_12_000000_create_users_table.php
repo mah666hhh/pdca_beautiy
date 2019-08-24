@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
-            $table->string('email')->unique();
+            $table->string('email', 128)->unique();
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             // $table->rememberToken();
@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->date('last_login_day')->nullable()->default(null);
             $table->integer('continus_login_count')->default(0);
             $table->boolean('daily_login_flg')->default(false);
-            $table->string('goal', 500);
+            $table->string('goal', 50);
             $table->timestamps();
         });
     }

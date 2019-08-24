@@ -5,8 +5,10 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Validator;
 
-class User extends Authenticatable
+class User extends Model
 {
     use Notifiable;
 
@@ -36,6 +38,37 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::saving(function ($user) {
+    //         $validator = Validator::make($user,
+    //         [
+    //             'name' => 'required|string|max:50|unique:users,name',
+    //             'email' => 'required|email|max:128|unique:users,email',
+    //             'password' => 'required|string|min:6|confirmed',
+    //             'goal' => 'required|string|max:50|'
+    //         ]
+    //         // [
+    //         //     'name.required' => '名前は必須項目です。',
+    //         //     'email.required' => 'emailは必須項目です。'
+    //         // ]
+    //         );
+    //         if($validator->fails()){
+    //             // falseをリターンしたら作成されません
+    //             return false;
+    //         }
+    //         return $validator;
+    //     });
+    // }
+
+    /**
+     * create Validator Instance
+     *
+     * @return IlluminateValidationValidator
+     */
 
     public function posts() {
         return $this->hasMany('App\Post');
