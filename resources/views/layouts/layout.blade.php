@@ -10,14 +10,14 @@
   @elseif(env('APP_ENV') == 'production')
     <link rel="stylesheet" href="{{ secure_asset('css/custom.css') }}" type="text/css">
   @endif
-  <title>bravestar</title>
+  <title>PDCA Beauty</title>
 </head>
 
 <body>
   <header class="navbar fixed-top" id="header-container">
     <a href="/" class="navbar-brand">
       <p class="logo"><img src="{{ asset('image/スライムアイコン-545x460.png') }}" width="30" height="30" alt="スライム">
-        　bravestar
+        　PDCA Beauty
       </p>
     </a>
     <span>
