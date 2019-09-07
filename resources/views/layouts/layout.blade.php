@@ -59,7 +59,7 @@
 
   <footer class="navbar" id="footer-container">
     <a href="mailto:mah666hhh@gmail.com?subject=PDCA美人 お問い合わせ" class="btn btn-primary">お問い合わせ</a>
-    <a href="/howto" class="btn btn-default">使い方</a>
+    <!-- <a href="/howto" class="btn btn-default">使い方</a> -->
   </footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><!-- Scripts（Jquery） -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><!-- Scripts（bootstrapのjavascript） -->
