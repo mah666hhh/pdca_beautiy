@@ -74,7 +74,9 @@ class User extends Model
         return $this->hasMany('App\Post');
     }
 
-    public function scopeFindCurrentUserId($query, $session_email) {
-        return $query->where('email', $session_email)->first()->id;
+    public function scopeFindCurrentUserId($query, $session_email=null) {
+        if($session_email != null) {
+            return $query->where('email', $session_email)->first()->id;
+        }
     }
 }

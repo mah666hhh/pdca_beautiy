@@ -21,14 +21,7 @@
       </p>
     </a>
     <span>
-      <div class="header-link-container"> <!-- align="right" -->
-        <span>$session_emailにある値:
-        @if(isset ($session_email))
-          {{ $session_email }}
-        @else
-          空です
-        @endif
-        </span>
+      <div class="header-link-container">
         @if(isset ($session_email))
           <div class="btn-group">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

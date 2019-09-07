@@ -24,6 +24,7 @@ class UserController extends Controller
         $user->last_login_day = Carbon::today();
         $user->daily_login_flg = 1;
         $user->continus_login_count = 1;
+
         $user->save();
         $request->session()->put('ses_email', $request->email);
 
