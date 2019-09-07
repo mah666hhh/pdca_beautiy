@@ -11,7 +11,7 @@
     {{ csrf_field() }}
     <div class="form-group">
 
-        <label for="email_label">メールアドレス</label>
+        <label for="email_label">メールアドレス (テスト用 test@mail.com)</label>
         @if($errors->has('email'))
           @foreach($errors->get('email') as $error)
             <span class="form-error-field">{{ $error }}</span>
@@ -19,7 +19,7 @@
         @endif
         <input type="email" name="email" value="{{ old('email') }}" class="form-control" id="email_label" required="true">
 
-        <label for="password_label">パスワード</label>
+        <label for="password_label">パスワード (テスト用 foobar)</label>
         @if($errors->has('password'))
           @foreach($errors->get('password') as $error)
             <span class="form-error-field">{{ $error }}</span>
