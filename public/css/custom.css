@@ -126,3 +126,7 @@ body {
 .modal-form-label {
   float: left;
 }
+
+.datetime-input-edit-wrapper {
+  margin-top: -10px;
+}
